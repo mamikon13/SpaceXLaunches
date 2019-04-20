@@ -22,7 +22,7 @@ struct Links {
 
 extension Links: Decodable {
     private enum CodingKeys: String, CodingKey {
-        case missionPatch = "mission_patch"
+        case missionPatch = "mission_patch_small"
         
         case redditMedia = "reddit_media"
         case articleLink = "article_link"

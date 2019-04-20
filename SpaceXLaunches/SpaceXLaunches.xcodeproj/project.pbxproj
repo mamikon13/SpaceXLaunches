@@ -17,6 +17,8 @@
 		C730FA3622672B74007973FB /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C730FA3522672B74007973FB /* Launch.swift */; };
 		C730FA3822672C19007973FB /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = C730FA3722672C19007973FB /* Links.swift */; };
 		C739D7852269BA7B0060B70E /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C739D7842269BA7B0060B70E /* LaunchCell.swift */; };
+		C7D09E54226BD24A008D231C /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D09E53226BD24A008D231C /* LaunchViewController.swift */; };
+		C7DEA863226A9248008686E2 /* CustomizedDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DEA862226A9248008686E2 /* CustomizedDateFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		C730FA3522672B74007973FB /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		C730FA3722672C19007973FB /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		C739D7842269BA7B0060B70E /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
+		C7D09E53226BD24A008D231C /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		C7DEA862226A9248008686E2 /* CustomizedDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizedDateFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,13 +71,15 @@
 				C730FA142266708E007973FB /* AppDelegate.swift */,
 				C730FA26226670BC007973FB /* Model.swift */,
 				C730FA2A22667742007973FB /* LaunchesTableViewController.swift */,
+				C7D09E53226BD24A008D231C /* LaunchViewController.swift */,
 				C739D7842269BA7B0060B70E /* LaunchCell.swift */,
 				C730FA3522672B74007973FB /* Launch.swift */,
 				C730FA3722672C19007973FB /* Links.swift */,
 				C730FA2E22672951007973FB /* Rocket.swift */,
 				C730FA182266708E007973FB /* Main.storyboard */,
-				C730FA1B22667090007973FB /* Assets.xcassets */,
 				C730FA1D22667090007973FB /* LaunchScreen.storyboard */,
+				C7DEA862226A9248008686E2 /* CustomizedDateFormatter.swift */,
+				C730FA1B22667090007973FB /* Assets.xcassets */,
 				C730FA2022667090007973FB /* Info.plist */,
 			);
 			path = SpaceXLaunches;
@@ -151,11 +157,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				C730FA27226670BC007973FB /* Model.swift in Sources */,
+				C7DEA863226A9248008686E2 /* CustomizedDateFormatter.swift in Sources */,
 				C730FA2F22672951007973FB /* Rocket.swift in Sources */,
 				C730FA2B22667742007973FB /* LaunchesTableViewController.swift in Sources */,
 				C730FA3822672C19007973FB /* Links.swift in Sources */,
 				C730FA3622672B74007973FB /* Launch.swift in Sources */,
 				C739D7852269BA7B0060B70E /* LaunchCell.swift in Sources */,
+				C7D09E54226BD24A008D231C /* LaunchViewController.swift in Sources */,
 				C730FA152266708E007973FB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

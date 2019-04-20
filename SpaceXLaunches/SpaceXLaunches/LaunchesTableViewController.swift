@@ -8,117 +8,152 @@
 
 import UIKit
 
+
 class LaunchesTableViewController: UITableViewController {
     
-//    var model: Model!
-    var launches: [Launch]!
+    private var model: Model?
+    private var launches: [Launch] = []
+    
+    var activityIndicator: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView(style: .gray)
+        activity.hidesWhenStopped = true
+        return activity
+    }()
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        model.loadData()
-//        let launches = self.launches
-        self.launches = Model.sharedInstance.launches
+        tableView.tableFooterView = UIView()
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name("dataRefreshed"), object: nil, queue: nil) { (notification) in
+        setupActivityIndicator()
+        setupRefreshControl()
+        
+        setupModel()
+        loadData()
+    }
+
+}
+
+
+
+private extension LaunchesTableViewController {
+    
+    func setupActivityIndicator() {
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+    }
+    
+    
+    func setupModel() {
+        model = Model()
+        model?.delegate = self
+    }
+    
+    
+    func loadData() {
+        model?.loadData() { [weak self] (launches) in
+            guard let self = self else { return }
             
+            self.launches = launches
             DispatchQueue.main.async {
+                self.stopRefreshingUI()
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    
+    func setupRefreshControl() {
+        refreshControl = UIRefreshControl()
         
-        NotificationCenter.default.addObserver(forName: NSNotification.Name?(NSNotification.Name(rawValue: "errorWhileJSONLoading")), object: nil, queue: nil) { (notification) in
-            
-            let errorDesc = notification.userInfo?["ErrorDescription"]
-            print(errorDesc!)
-            
-            
-            var startIndex = errorDesc.debugDescription.firstIndex(of: "\"")
-            startIndex = errorDesc.debugDescription.index(startIndex!, offsetBy: 1)
-            let lastIndex = errorDesc.debugDescription.lastIndex(of: "\"")
-            let errorString = String(errorDesc.debugDescription[startIndex!..<lastIndex!])
-            
-            
-            let errorAlert = UIAlertController(title: "Error", message: errorString, preferredStyle: UIAlertController.Style.alert)
-            
-            let alertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
-            errorAlert.addAction(alertAction)
-            
-            DispatchQueue.main.async {
-                self.present(errorAlert, animated: true, completion: nil)
-            }
+        refreshControl?.addTarget(self,
+                                  action: #selector(handleRefresh),
+                                  for: .valueChanged)
+        refreshControl?.tintColor = UIColor.black
+        
+        guard let unwrappedRefreshControl = refreshControl else { return }
+        view.addSubview(unwrappedRefreshControl)
+    }
+    
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        refreshControl.beginRefreshing()
+        loadData()
+    }
+    
+    
+    func stopRefreshingUI() {
+        refreshControl?.endRefreshing()
+        activityIndicator.stopAnimating()
+    }
+    
+}
+
+
+// MARK: - Table view data source
+
+extension LaunchesTableViewController: ModelDelegate {
+    
+    func didReceived(error: Error?) {
+        guard let unwrappedError = error else { return }
+        
+        let description = unwrappedError.localizedDescription
+        var startIndex = description.debugDescription.firstIndex(of: "\"")
+        startIndex = description.debugDescription.index(startIndex!, offsetBy: 1)
+        let lastIndex = description.debugDescription.lastIndex(of: "\"")
+        
+        let errorString = String(description.debugDescription[startIndex!..<lastIndex!])
+        
+        
+        let errorAlert = UIAlertController(title: "Error", message: errorString, preferredStyle: UIAlertController.Style.alert)
+        
+        let alertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
+        errorAlert.addAction(alertAction)
+        
+        DispatchQueue.main.async {
+            self.stopRefreshingUI()
+            self.present(errorAlert, animated: true, completion: nil)
         }
     }
     
-    
-    // MARK: - Table view data source
+}
 
+
+// MARK: - Table view data source
+
+extension LaunchesTableViewController {
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 103
+    }
+    
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return self.launches.count
-//        return 4
     }
-
-
+    
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! LaunchCell
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as? LaunchCell
+        
         let launchForCell = self.launches[indexPath.row]
-        cell.initCell(launch: launchForCell)
-//
-        return cell
+        cell?.initCell(launch: launchForCell)
+        
+        guard let unwrappedCell = cell else { return UITableViewCell() }
+        
+        return unwrappedCell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

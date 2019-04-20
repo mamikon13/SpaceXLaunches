@@ -13,7 +13,7 @@ struct Launch {
     let flightNumber: Int
     let missionName: String
     let launchDate: Date
-    let success: Bool
+    let success: Bool?
     
     let links: Links
     let rocket: Rocket
@@ -50,14 +50,14 @@ extension Launch: Decodable {
         self.flightNumber = try container.decode(Int.self, forKey: .flightNumber)
         self.missionName = try container.decode(String.self, forKey: .missionName)
         self.launchDate = try container.decode(Date.self, forKey: .launchDate)
-        self.success = try container.decode(Bool.self, forKey: .success)
+        self.success = try? container.decode(Bool.self, forKey: .success)
         
         self.links = try container.decode(Links.self, forKey: .links)
         self.rocket = try container.decode(Rocket.self, forKey: .rocket)
         
-        self.details = try container.decode(String.self, forKey: .details)
+        self.details = try? container.decode(String.self, forKey: .details)
         
         let launchSiteContainer = try container.nestedContainer(keyedBy: CodingKeys.SiteCodingKeys.self, forKey: .site)
-        self.launchSite = try launchSiteContainer.decode(String.self, forKey: .launchSite)
+        self.launchSite = try? launchSiteContainer.decode(String.self, forKey: .launchSite)
     }
 }
