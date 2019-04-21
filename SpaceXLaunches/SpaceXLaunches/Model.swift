@@ -49,7 +49,7 @@ class Model {
         self.launches = []
         
         let decoder = JSONDecoder()
-        //        decoder.dateDecodingStrategy = .formatted(DateFormatter.fullISO8601)
+        decoder.dateDecodingStrategy = .secondsSince1970
         
         do {
             launches = try decoder.decode([Launch].self, from: data)

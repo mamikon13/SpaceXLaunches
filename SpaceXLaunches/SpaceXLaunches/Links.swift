@@ -21,6 +21,7 @@ struct Links {
 
 
 extension Links: Decodable {
+    
     private enum CodingKeys: String, CodingKey {
         case missionPatch = "mission_patch_small"
         
@@ -41,4 +42,5 @@ extension Links: Decodable {
         self.wikipedia = try? container.decode(URL.self, forKey: .wikipedia)
         self.videoLink = try? container.decode(URL.self, forKey: .videoLink)
     }
+    
 }

@@ -17,6 +17,7 @@ struct Rocket {
 
 
 extension Rocket: Decodable {
+    
     private enum CodingKeys: String, CodingKey {
         case rocketName = "rocket_name"
         case rocketType = "rocket_type"
@@ -30,4 +31,5 @@ extension Rocket: Decodable {
         self.rocketName = try container.decode(String.self, forKey: .rocketName)
         self.rocketType = try container.decode(String.self, forKey: .rocketType)
     }
+    
 }

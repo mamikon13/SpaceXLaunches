@@ -14,7 +14,7 @@ class LaunchesTableViewController: UITableViewController {
     private var model: Model?
     private var launches: [Launch] = []
     
-    var activityIndicator: UIActivityIndicatorView = {
+    private var activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView(style: .gray)
         activity.hidesWhenStopped = true
         return activity
@@ -32,7 +32,13 @@ class LaunchesTableViewController: UITableViewController {
         setupModel()
         loadData()
     }
-
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender:  Any?) {
+        guard let selectedCellIndexRow = tableView.indexPathForSelectedRow?.row else { return }
+        (segue.destination as? LaunchViewController)?.launch = launches[selectedCellIndexRow]
+    }
+    
 }
 
 
@@ -57,6 +63,8 @@ private extension LaunchesTableViewController {
             guard let self = self else { return }
             
             self.launches = launches
+            self.sortLaunchesByDate()
+            
             DispatchQueue.main.async {
                 self.stopRefreshingUI()
                 self.tableView.reloadData()
@@ -87,6 +95,15 @@ private extension LaunchesTableViewController {
     func stopRefreshingUI() {
         refreshControl?.endRefreshing()
         activityIndicator.stopAnimating()
+    }
+    
+    
+    func sortLaunchesByDate() {
+        let sortedLaunches = launches.sorted {
+            $0.launchDate > $1.launchDate   // firstly newest launches
+        }
+        
+        launches = sortedLaunches
     }
     
 }
@@ -157,3 +174,4 @@ extension LaunchesTableViewController {
     }
     
 }
+
