@@ -17,13 +17,19 @@ class LaunchViewController: UIViewController {
     @IBOutlet weak var missionNameLabel: UILabel!
     @IBOutlet weak var launchDateLabel: UILabel!
     @IBOutlet weak var successLabel: UILabel!
-    @IBOutlet weak var detailsTextView: UITextView!
+
+    @IBOutlet weak var detailsLabel: UILabel!
     @IBOutlet weak var launchSiteLabel: UILabel!
-    
+
     @IBOutlet weak var rocketNameLabel: UILabel!
     @IBOutlet weak var rocketTypeLabel: UILabel!
-    
+
     @IBOutlet weak var missionPatch: UIImageView!
+    
+    @IBOutlet weak var videoButton: UIButton!
+    @IBOutlet weak var wikipediaButton: UIButton!
+    @IBOutlet weak var articleButton: UIButton!
+    @IBOutlet weak var redditButton: UIButton!
     
     @IBAction func videoPushedLink(_ sender: Any) {
         openURL(launch, url: launch?.links.videoLink)
@@ -45,8 +51,7 @@ class LaunchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        scrollView.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height+100)
-        
+        detailsLabel.numberOfLines = 0
         missionNameLabel.numberOfLines = 0
         launchSiteLabel.numberOfLines = 0
         
@@ -70,7 +75,7 @@ private extension LaunchViewController {
             return success ? "Success" : "Not success"
         } ()
         
-        detailsTextView.text = launch.details
+        detailsLabel.text = launch.details
         launchSiteLabel.text = launch.launchSite
         
         rocketNameLabel.text = launch.rocket.rocketName
@@ -80,6 +85,11 @@ private extension LaunchViewController {
             guard let self = self else { return }
             DispatchQueue.main.async { self.missionPatch.image = image }
         }
+        
+        if launch.links.videoLink == nil { videoButton.isEnabled = false }
+        if launch.links.wikipedia == nil { wikipediaButton.isEnabled = false }
+        if launch.links.articleLink == nil { articleButton.isEnabled = false }
+        if launch.links.redditMedia == nil { redditButton.isEnabled = false }
     }
     
     

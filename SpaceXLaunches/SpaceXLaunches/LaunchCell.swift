@@ -72,7 +72,7 @@ extension LaunchCell {
     
     func downloadImage(from url: URL?, completion: @escaping (UIImage?) -> ()) {
         guard let url = url else {
-            completion(nil)
+            completion(UIImage(named: "empty_patch"))
             return
         }
         
