@@ -109,11 +109,11 @@
             <objects>
                 <viewController id="Nfb-18-K2Y" customClass="LaunchViewController" customModule="SpaceXLaunches" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dk8-sl-Bpb">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="900"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Btd-Ib-FO8">
-                                <rect key="frame" x="0.0" y="64" width="375" height="836"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="736"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XmC-hF-ebP">
                                         <rect key="frame" x="222" y="531" width="67" height="30"/>
@@ -270,7 +270,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Grf-xY-PAB"/>
                     </view>
-                    <size key="freeformSize" width="375" height="900"/>
+                    <size key="freeformSize" width="375" height="800"/>
                     <connections>
                         <outlet property="articleButton" destination="lGQ-UV-JNf" id="cQa-0c-88X"/>
                         <outlet property="detailsLabel" destination="8ge-u3-uhy" id="w7C-b5-T8r"/>

@@ -52,7 +52,7 @@ class LaunchCell: UITableViewCell {
             return success ? self.successIcon : self.notSuccessIcon
         } ()
         
-        downloadImage(from: launch.links.missionPatch) { [weak self] image in
+        LoadFunctions().downloadImage(from: launch.links.missionPatch) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async { self.missionPatch.image = image }
         }
@@ -62,30 +62,6 @@ class LaunchCell: UITableViewCell {
     override func prepareForReuse() {
         missionPatch.image = nil
         super.prepareForReuse()
-    }
-    
-}
-
-
-
-extension LaunchCell {
-    
-    func downloadImage(from url: URL?, completion: @escaping (UIImage?) -> ()) {
-        guard let url = url else {
-            completion(UIImage(named: "empty_patch"))
-            return
-        }
-        
-        DispatchQueue.global(qos: .background).async {
-            guard
-                let imageData = try? Data(contentsOf: url),
-                let image = UIImage(data: imageData)
-                else {
-                    completion(nil)
-                    return
-            }
-            completion(image)
-        }
     }
     
 }

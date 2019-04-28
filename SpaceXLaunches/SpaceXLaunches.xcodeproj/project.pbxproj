@@ -17,6 +17,7 @@
 		C730FA3622672B74007973FB /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C730FA3522672B74007973FB /* Launch.swift */; };
 		C730FA3822672C19007973FB /* Links.swift in Sources */ = {isa = PBXBuildFile; fileRef = C730FA3722672C19007973FB /* Links.swift */; };
 		C739D7852269BA7B0060B70E /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C739D7842269BA7B0060B70E /* LaunchCell.swift */; };
+		C798E38F2275A4F50085D605 /* LoadFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C798E38E2275A4F50085D605 /* LoadFunctions.swift */; };
 		C7D09E54226BD24A008D231C /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D09E53226BD24A008D231C /* LaunchViewController.swift */; };
 		C7DEA863226A9248008686E2 /* CustomizedDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DEA862226A9248008686E2 /* CustomizedDateFormatter.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		C730FA3522672B74007973FB /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		C730FA3722672C19007973FB /* Links.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Links.swift; sourceTree = "<group>"; };
 		C739D7842269BA7B0060B70E /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
+		C798E38E2275A4F50085D605 /* LoadFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFunctions.swift; sourceTree = "<group>"; };
 		C7D09E53226BD24A008D231C /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		C7DEA862226A9248008686E2 /* CustomizedDateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizedDateFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -79,6 +81,7 @@
 				C730FA182266708E007973FB /* Main.storyboard */,
 				C730FA1D22667090007973FB /* LaunchScreen.storyboard */,
 				C7DEA862226A9248008686E2 /* CustomizedDateFormatter.swift */,
+				C798E38E2275A4F50085D605 /* LoadFunctions.swift */,
 				C730FA1B22667090007973FB /* Assets.xcassets */,
 				C730FA2022667090007973FB /* Info.plist */,
 			);
@@ -165,6 +168,7 @@
 				C739D7852269BA7B0060B70E /* LaunchCell.swift in Sources */,
 				C7D09E54226BD24A008D231C /* LaunchViewController.swift in Sources */,
 				C730FA152266708E007973FB /* AppDelegate.swift in Sources */,
+				C798E38F2275A4F50085D605 /* LoadFunctions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

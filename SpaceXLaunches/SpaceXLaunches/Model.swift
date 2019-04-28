@@ -6,6 +6,7 @@
 //  Copyright © 2019 Mamikon Nikogosyan. All rights reserved.
 //
 
+import UIKit
 import Foundation
 
 
@@ -19,7 +20,7 @@ class Model {
     
     weak var delegate: ModelDelegate?
     
-    private var launches: [Launch] = []
+    var launches: [Launch] = []
     private let url = URL(string: "https://api.spacexdata.com/v3/launches")
     
     
@@ -30,7 +31,7 @@ class Model {
             
             if error == nil {
                 print("Данные загружены")
-                self.parsingJSON(data!) //  Parse data in success case
+                self.launches = self.parsingJSON(data!) //  Parse data in success case
                 
                 completionHandler(self.launches)
                 
@@ -44,9 +45,9 @@ class Model {
     }
     
     
-    private func parsingJSON(_ data: Data) {
+    private func parsingJSON(_ data: Data) -> [Launch] {
         
-        self.launches = []
+        var launches: [Launch] = []
         
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .secondsSince1970
@@ -59,6 +60,7 @@ class Model {
         }
         
         print("Данные обновлены")
+        return launches
     }
     
 }

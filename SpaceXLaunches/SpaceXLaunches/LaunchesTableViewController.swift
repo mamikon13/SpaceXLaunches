@@ -12,13 +12,8 @@ import UIKit
 class LaunchesTableViewController: UITableViewController {
     
     private var model: Model?
-    private var launches: [Launch] = []
     
-    private var activityIndicator: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView(style: .gray)
-        activity.hidesWhenStopped = true
-        return activity
-    }()
+    private var activityIndicator = UIActivityIndicatorView(style: .gray)
     
     
     override func viewDidLoad() {
@@ -36,7 +31,7 @@ class LaunchesTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender:  Any?) {
         guard let selectedCellIndexRow = tableView.indexPathForSelectedRow?.row else { return }
-        (segue.destination as? LaunchViewController)?.launch = launches[selectedCellIndexRow]
+        (segue.destination as? LaunchViewController)?.launch = model?.launches[selectedCellIndexRow]
     }
     
 }
@@ -46,6 +41,7 @@ class LaunchesTableViewController: UITableViewController {
 private extension LaunchesTableViewController {
     
     func setupActivityIndicator() {
+        activityIndicator.hidesWhenStopped = true
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
         activityIndicator.startAnimating()
@@ -62,7 +58,6 @@ private extension LaunchesTableViewController {
         model?.loadData() { [weak self] (launches) in
             guard let self = self else { return }
             
-            self.launches = launches
             self.sortLaunchesByDate()
             
             DispatchQueue.main.async {
@@ -99,11 +94,13 @@ private extension LaunchesTableViewController {
     
     
     func sortLaunchesByDate() {
-        let sortedLaunches = launches.sorted {
+        guard let model = model else { return }
+        
+        let sortedLaunches = model.launches.sorted {
             $0.launchDate > $1.launchDate   // firstly newest launches
         }
         
-        launches = sortedLaunches
+        model.launches = sortedLaunches
     }
     
 }
@@ -153,16 +150,17 @@ extension LaunchesTableViewController {
     
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.launches.count
+        return self.model?.launches.count ?? 0
     }
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as? LaunchCell
         
-        let launchForCell = self.launches[indexPath.row]
-        cell?.initCell(launch: launchForCell)
+        let launchForCell = self.model?.launches[indexPath.row]
+        guard let unwrappedLaunchForCell = launchForCell else { return UITableViewCell() }
         
+        cell?.initCell(launch: unwrappedLaunchForCell)
         guard let unwrappedCell = cell else { return UITableViewCell() }
         
         return unwrappedCell
