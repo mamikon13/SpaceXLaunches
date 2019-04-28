@@ -32,19 +32,19 @@ class LaunchViewController: UIViewController {
     @IBOutlet weak var redditButton: UIButton!
     
     @IBAction func videoPushedLink(_ sender: Any) {
-        openURL(launch, url: launch?.links.videoLink)
+        openURL(url: launch?.links.videoLink)
     }
     
     @IBAction func wikipediaPushedLink(_ sender: Any) {
-        openURL(launch, url: launch?.links.wikipedia)
+        openURL(url: launch?.links.wikipedia)
     }
     
     @IBAction func articlePushedLink(_ sender: Any) {
-        openURL(launch, url: launch?.links.articleLink)
+        openURL(url: launch?.links.articleLink)
     }
     
     @IBAction func redditPushedLink(_ sender: Any) {
-        openURL(launch, url: launch?.links.redditMedia)
+        openURL(url: launch?.links.redditMedia)
     }
     
     
@@ -93,12 +93,8 @@ private extension LaunchViewController {
     }
     
     
-    func openURL(_ launch: Launch?, url: URL?) {
-        guard
-            let _ = launch,
-            let url = url
-            else { return }
-        
+    func openURL(url: URL?) {
+        guard let url = url else { return }
         UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
     }
     

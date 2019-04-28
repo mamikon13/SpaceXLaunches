@@ -29,16 +29,27 @@ class Model {
         let task = URLSession.shared.dataTask(with: self.url!) { [weak self] (data, response, error) in
             guard let self = self else { return }
             
-            if error == nil {
+            guard let error = error else {
                 print("Данные загружены")
                 self.launches = self.parsingJSON(data!) //  Parse data in success case
                 
                 completionHandler(self.launches)
-                
-            } else {
-                print("Error within 'loadData': " + error!.localizedDescription)
-                self.delegate?.didReceived(error: error)
+                return
             }
+            
+            print("Error within 'loadData': " + error.localizedDescription)
+            self.delegate?.didReceived(error: error)
+            
+//            if error == nil {
+//                print("Данные загружены")
+//                self.launches = self.parsingJSON(data!) //  Parse data in success case
+//
+//                completionHandler(self.launches)
+//
+//            } else {
+//                print("Error within 'loadData': " + error!.localizedDescription)
+//                self.delegate?.didReceived(error: error)
+//            }
         }
         
         task.resume()
