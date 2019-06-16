@@ -55,7 +55,7 @@ private extension LaunchesTableViewController {
     
     
     func loadData() {
-        model?.loadData() { [weak self] (launches) in
+        model?.loadData() { [weak self] (_) in
             guard let self = self else { return }
             
             self.sortLaunchesByDate()
@@ -127,8 +127,7 @@ extension LaunchesTableViewController: ModelDelegate {
         errorAlert.addAction(alertAction)
         
         DispatchQueue.main.async {
-            self.stopRefreshingUI()
-            self.present(errorAlert, animated: true, completion: nil)
+            self.present(errorAlert, animated: true, completion: { self.stopRefreshingUI() })
         }
     }
     
@@ -160,7 +159,7 @@ extension LaunchesTableViewController {
         let launchForCell = self.model?.launches[indexPath.row]
         guard let unwrappedLaunchForCell = launchForCell else { return UITableViewCell() }
         
-        cell?.initCell(launch: unwrappedLaunchForCell)
+        cell?.setupCell(launch: unwrappedLaunchForCell)
         guard let unwrappedCell = cell else { return UITableViewCell() }
         
         return unwrappedCell

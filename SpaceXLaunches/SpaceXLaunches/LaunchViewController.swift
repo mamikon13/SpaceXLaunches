@@ -81,7 +81,7 @@ private extension LaunchViewController {
         rocketNameLabel.text = launch.rocket.rocketName
         rocketTypeLabel.text = launch.rocket.rocketType
         
-        LoadFunctions().downloadImage(from: launch.links.missionPatch) { [weak self] image in
+        let _ = LoadFunctions().downloadImage(from: launch.links.missionPatch) { [weak self] image in
             guard let self = self else { return }
             DispatchQueue.main.async { self.missionPatch.image = image }
         }

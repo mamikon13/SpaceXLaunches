@@ -24,7 +24,7 @@ class Model {
     private let url = URL(string: "https://api.spacexdata.com/v3/launches")
     
     
-    func loadData(completionHandler: @escaping (_ launches: [Launch]) -> Void) {
+    func loadData(completionHandler: @escaping ([Launch]) -> Void) {
         
         let task = URLSession.shared.dataTask(with: self.url!) { [weak self] (data, response, error) in
             guard let self = self else { return }
@@ -39,17 +39,6 @@ class Model {
             
             print("Error within 'loadData': " + error.localizedDescription)
             self.delegate?.didReceived(error: error)
-            
-//            if error == nil {
-//                print("Данные загружены")
-//                self.launches = self.parsingJSON(data!) //  Parse data in success case
-//
-//                completionHandler(self.launches)
-//
-//            } else {
-//                print("Error within 'loadData': " + error!.localizedDescription)
-//                self.delegate?.didReceived(error: error)
-//            }
         }
         
         task.resume()

@@ -11,6 +11,8 @@ import UIKit
 
 class LaunchCell: UITableViewCell {
     
+    var task: URLSessionTask?
+    
     @IBOutlet weak var missionName: UILabel!
     @IBOutlet weak var launchDate: UILabel!
     @IBOutlet weak var success: UILabel!
@@ -37,7 +39,7 @@ class LaunchCell: UITableViewCell {
     }
     
     
-    func initCell(launch: Launch) {
+    func setupCell(launch: Launch) {
         
         missionName.text = launch.missionName
         launchDate.text = CustomizedDateFormatter().fromDateToString(date: launch.launchDate)
@@ -52,15 +54,15 @@ class LaunchCell: UITableViewCell {
             return success ? self.successIcon : self.notSuccessIcon
         } ()
         
-        LoadFunctions().downloadImage(from: launch.links.missionPatch) { [weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async { self.missionPatch.image = image }
+        task = LoadFunctions().downloadImage(from: launch.links.missionPatch) { [missionPatch] image in
+            DispatchQueue.main.async { missionPatch?.image = image }
         }
     }
     
     
     override func prepareForReuse() {
         missionPatch.image = nil
+        task?.cancel()
         super.prepareForReuse()
     }
     
